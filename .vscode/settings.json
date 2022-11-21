@@ -1,0 +1,18 @@
+{
+  "editor.defaultFormatter": "SimonSiefke.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+  },
+  "workbench.colorTheme": "Quiet Light",
+  "explorer.confirmDelete": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.minimap.enabled": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+  },
+  "diffEditor.maxComputationTime": 5
+}

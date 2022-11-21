@@ -1,0 +1,21 @@
+{
+  WorkflowTask001 {
+    taskDefinition: {
+      taskSequence: 1,
+      taskId: 'workflow-001',
+      taskName: 'WorkflowTask001',
+      taskClass: 'WorkflowTask001',
+      nextTasks: [Array],
+      taskActive: true
+    }
+  },
+  WorkflowTask002 {
+    taskDefinition: {
+      taskId: 'workflow-002',
+      taskName: 'WorkflowTask002',
+      taskClass: 'WorkflowTask002',
+      nextTasks: [],
+      taskActive: true
+    }
+  }
+}

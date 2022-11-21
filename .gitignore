@@ -1,0 +1,31 @@
+# User-specific stuff and IDEs
+.env*
+
+!.env-unit-test
+
+# IDE and plugin related
+*.iml
+.project
+.classpath
+.settings/
+
+# CDK Stuff
+.cdk.staging
+cdk.out
+
+# Code coverage and testing
+coverage/**
+test-reports
+test-report.html
+
+# Other code and packaging artifacts
+**/node_modules/
+dist/
+out/
+target/
+.eslintcache
+.parcel-cache
+.DS_Store
+
+# SAM Stuff
+.aws-sam/*
