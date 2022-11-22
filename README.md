@@ -1,31 +1,52 @@
-# Workflow
+# Workflow-chain
+The workflow-chain library, herinafter simply workflow, is a simple task based workflow library that provides types, interfaces, classes, validation and supporting functions to assist a developer to design, develop and implement task based workflows.  Workflows can be hosted and run within a variety of constructs.  Web/UI, AWS Lambdas, Node processing or just about anything that runs Node.
 
 ## Project
 The workflow project is a simple library that provides Types, Interfaces, validation and a sample.  The library is based on the following processing paradigm.
-- A Workflow runs a sequence of tasks.
-- The Workflow is defined using a JSON workflow definition.
-- The Workflow definition contains the "starting" task class, and then each task definition contains a nextSteps: array of the next task classes to run.
+
+- A customer/client has various processing needs that go beyond a simple button click.
+- These workflows require a mixed amount of time to execute.
+- A workflow requires 1 or more steps to complete.
+- Each step can be thought of as a task.
+- A workflow runs a sequence of tasks.
+- The workflow is defined using a JSON workflow definition.
+- The workflow definition contains the "starting" task class, and then each task definition contains a nextSteps: array of the next task class to run.
 - The "chain" of tasks thus defined the workflow.
+- Hence workflow-chain.
 
 Obviously, I've simplified the development process, but the above is a very simple set of principles for any workflow.  The workflow can be run as part of a long running Web/UI process, a node process, AWS lambdas, etc...
 
 The principles are simple, articulate your process as a workflow and then begine to divide-and-conquer individual, discrete "tasks" within the workflow.  A few iteration cycles and your workflow can be broken down into a simple "chain" of tasks.
 
-### Publishing
-When publishing the library, use the following command : 
+## Essential Concepts
 
-```
-npm publish --access public
-```
+### Workflow Definition
+The workflow requires a workflow definition, a JSON object that adheres to the IWorkflowDefinition type interface.  The definition essentially describes (defines) the workflow as a textual representation.  A definition contains the following tier 1 elements : 
+
+- Workflow Attributes - These are traditional elements such as name, description, namespace, workflow context (discussed later) and the "starting" classname.
+- Workflow Tasks - An array of JSON objects of each task class that the workflow needs.
+
+#### Workflow Context
+The workflow context provides a simple string indexed JSON dictionary where all input task and task results are stored.  As the workflow progresses thru the tasks, the context will grow, keeping track of each task's outcome.
+
+Index Key - Typically the Task Classname:doMethod
+
+### Workflow Namespace
+The workflow relies on a namespace for each workflow you design and implement.  We'll see later why this is.  The NS provides a scoped contruct that the workflow will utilize to dynamically generate task class runtime instances.  Inside this NS, you define the following : 
+
+- Workflow Definition - This can be any JSON construct that adheres to the IWorkflowDefinition Type Interface.
+
 
 
 ## Tasks and Reuse
-A residual benefit is realized in the tasks.  As hyou build more and more workflows, you'll begin to design and develop tasks that are more discrete and reusable.  This task growth perpetuates faster workflow development as new and future workflows begin needing a task developed in a previous workflow.
+A residual benefit is realized in the tasks.  As you build more and more workflows, you'll begin to design and develop tasks that are more discrete and reusable.  This task growth perpetuates faster workflow development as new and future workflows begin needing a task developed in a previous workflow.
 
 For larger scope projects you'll find a need for libraries of tasks...one for file utilities, one for AWS Dynamo, one for Company specific tasks.  As the libraries grow, workflow creation is faster and "tested".
 
-## Creating a Workflow
+# Creating a Workflow
 The following is a simple step-by-step guide on creating a workflow.
+
+## Guidelines
 
 - Design and breakdown your workflow into discrete tasks.  Think "generic", it's not CopyFinancialResultsFile it's simply CopyAFile.  It's not CalculateTaxRates, it CalculateTaxRate with a parent CalculateTaxRates that accepts the array and calls CalculateTaxRate for each array item.
 
@@ -93,3 +114,24 @@ If you have made these changes on your machine.
 - Run an npm install using your modified package.json
 
 You should have your modified copy loaded in as a dependency in node_modules.
+
+# Development
+The following section provides details on developing and enhancing the workflow-chain library.
+### Publishing
+When publishing the library, use the following command : 
+
+
+
+```
+npm login 
+Username: ***********
+Password: ************
+Email: (this IS public)
+Email: (this IS public) adymlincoln@gmail.com
+npm notice Please check your email for a one-time password (OTP)
+Enter one-time password: **********
+
+npm publish --access public
+```
+
+
