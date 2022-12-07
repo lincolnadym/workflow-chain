@@ -4,18 +4,22 @@
   "description": "Library for workflow processing using task chaining",
   "scripts": {
     "build": "tsc",
-    "clean": "tsc --build --clean",
+    "clean": "tsc --build --clean && rm -rf dist/*",
     "lint": "tsc --noEmit && eslint src/**/*.ts --fix",
     "test": "jest --coverage",
     "clean:install": "rm -rf node_modules && rm -f package-lock.json && npm install",
-    "build:local": "rm -rf ./dist/* && npm run clean && npm run build && npm pack --pack-destination \"./dist\"",
+    "build:local": "npm run clean && npm run build && npm pack",
     "pre-commit": "tsc && tsc --build --clean && lint-staged",
     "prepare": "husky install"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "dist/constants",
+    "dist/models",
+    "dist/workflows",
+    "dist/index.js",
+    "dist/index.d.ts"
   ],
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -50,13 +54,10 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
   },
-  "engines": {
-    "npm": "~7"
-  },
   "keywords": [
     "adym",
     "npm",
-    "package",
+    "chaining",
     "workflow"
   ],
   "release": {

@@ -1,2 +1,16 @@
 *.ts
 !*.d.ts
+
+# build exclusions
+.vscode
+*.tgz
+scratch.json
+tsconfig.*
+.prettierrc
+test-reports
+.eslint*
+environment-setup.json
+husky*
+jest*
+lint*
+test-report.html

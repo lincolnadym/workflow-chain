@@ -20,12 +20,11 @@ test-report.html
 
 # Other code and packaging artifacts
 **/node_modules/
-dist/
+# dist/
 out/
 target/
 .eslintcache
 .parcel-cache
 .DS_Store
-
 # SAM Stuff
 .aws-sam/*

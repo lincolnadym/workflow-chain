@@ -14,7 +14,7 @@ The workflow project is a simple library that provides Types, Interfaces, valida
 - The "chain" of tasks thus defined the workflow.
 - Hence workflow-chain.
 
-Obviously, I've simplified the development process, but the above is a very simple set of principles for any workflow.  The workflow can be run as part of a long running Web/UI process, a node process, AWS lambdas, etc...
+Obviously, I've simplified the process, but the above is a very simple set of principles for any workflow.  The workflow can be run as part of a long running Web/UI process, a node process, AWS lambdas, etc...
 
 The principles are simple, articulate your process as a workflow and then begine to divide-and-conquer individual, discrete "tasks" within the workflow.  A few iteration cycles and your workflow can be broken down into a simple "chain" of tasks.
 
@@ -103,24 +103,29 @@ As tasks are run within the workflow, each task accepts the workflow context as 
 The typical context item uses a contextKey of `${this.constructor.name}:&lt;methodname&gt;.  This makes it easier to track and code a context item.  If another task needs data from a previous task, then it can use the classname:method.
 
 # Local Testing
+Local testing allows developers on workflow-chain the ability to make changes to the library, build it on their machine, add it to a test project, then write workflows in that project to verify the new features.
 
 https://stackoverflow.com/questions/55560791/build-and-use-npm-package-locally
 
 If you have made these changes on your machine.
-- Run a build of the workflow package that you changed.
-- Run npm pack from the workflow project's root folder (npm run build:local). This creates a .tgz zip file of your package with your custom modifications into ./dist folder.
+- Run a build:local `npm run build:local` of the library.  This creates a .tgz zip file of your library with your modifications into ./dist folder.
 - Copy that *.tgz file into the root of your other project that references workflow.  (you could put it anywhere but root makes things easy) of your project.
-- In your project's package.json replace the version number workflow to the following "@adym/workflow": "file:my-packed-file.tgz"
+- In your project's package.json replace the reference to the workflow-chain library with the `"@adym/workflow": "file:my-packed-file.tgz"`
 - Run an npm install using your modified package.json
 
 You should have your modified copy loaded in as a dependency in node_modules.
 
 # Development
-The following section provides details on developing and enhancing the workflow-chain library.
-### Publishing
-When publishing the library, use the following command : 
+The following section provides details on developing and enhancing the workflow-chain library.  We typically follow a development cadence like the following : 
+- Checkout the workflow-chain from github
+- Checkout the workflow-examples from github
+- Modify the workflow-chain, adding new features and fixes
+- Build the workflow-chain locally, see above instructions
+- Modify the workflow-examples package.json and `npm install`
+- Write and/or modify workflows to test the new features and fixes.
 
-
+## Publishing
+When publishing the library, use the following commands : 
 
 ```
 npm login 
@@ -134,4 +139,20 @@ Enter one-time password: **********
 npm publish --access public
 ```
 
+  "files": [
+    "/dist",
+    "index.js",
+    "index.d.ts"
+  ],
 
+"files": [
+    "build/main",
+    "build/module",
+    "!**/*.spec.*",
+    "!**/*.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+
+    "outDir": "dist",

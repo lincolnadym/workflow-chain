@@ -20,6 +20,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "strictPropertyInitialization": false
   },
-  "exclude": ["node_modules", "test"],
-  "include": ["bin", "lib", "src"]
+  "exclude": ["node_modules", "test", "test-reports"],
+  "include": ["src/**/*.ts"],
 }
