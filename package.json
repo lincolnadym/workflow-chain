@@ -1,6 +1,6 @@
 {
   "name": "workflow-chain",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Library for workflow processing using task chaining",
   "scripts": {
     "build": "tsc",
