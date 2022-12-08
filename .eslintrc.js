@@ -16,5 +16,7 @@ module.exports = {
     ecmaVersion: '6',
     sourceType: 'module',
   },
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-namespace': 'off',
+  },
 }
