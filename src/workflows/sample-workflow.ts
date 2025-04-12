@@ -3,7 +3,7 @@ import {
   ITaskDefinition,
   IWorkflowDefinition,
   TWorkflowTask,
-  Logger as Log,
+  Logger,
 } from '../models';
 
 /**
@@ -60,7 +60,7 @@ export namespace SampleWorkflowNS {
     //   Log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPreTask() -`);
     // }
     doRunTask(): IContextItem {
-      Log.info(
+      this.log.info(
         `- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`,
       );
       return {
@@ -70,7 +70,7 @@ export namespace SampleWorkflowNS {
       };
     }
     doPostTask(): IContextItem {
-      Log.info(
+      this.log.info(
         `- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPostTask() -`,
       );
       return {
@@ -90,7 +90,7 @@ export namespace SampleWorkflowNS {
     //   Log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPreTask() -`);
     // }
     doRunTask(): IContextItem {
-      Log.info(
+      this.log.info(
         `- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`,
       );
       return {
@@ -100,7 +100,7 @@ export namespace SampleWorkflowNS {
       };
     }
     doPostTask(): IContextItem {
-      Log.info(
+      this.log.info(
         `- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPostTask() -`,
       );
       return {

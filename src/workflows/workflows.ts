@@ -2,7 +2,7 @@ import { ITask, ITaskDefinition, IWorkflowDefinition, TWorkflow, Logger as Log }
 import { SampleWorkflowNS } from './sample-workflow';
 
 /**
- * A sample workflow class that illustratest how you extend the
+ * A sample workflow class that illustrates how you extend the
  * TWorkflow class.  It's also critical that the constructor 
  * implement a loop thru all task-definitions in the workflow
  * definition and create dynamic runtime task class instances.  These
@@ -22,7 +22,7 @@ export class WorkflowSample extends TWorkflow {
         // DICTIONARY : Store the dynamic class into the dictionary
         this.workflowTasks[theItem.taskName] = theTask;
       } catch (error) {
-        Log.info(`Dynamic class create error ${JSON.stringify(error)}`);
+        this.log.info(`Dynamic class create error ${JSON.stringify(error)}`);
       }
     });
   }

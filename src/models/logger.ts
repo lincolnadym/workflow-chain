@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const util = require('util');
 
 export enum LogLevel {
@@ -10,12 +12,19 @@ export enum LogLevel {
 }
 
 export class Logger {
-  private static log(
+  private logLevel: LogLevel = LogLevel.Info;
+  constructor(theLogLevel?: LogLevel) {
+    if (theLogLevel) {
+      this.logLevel = theLogLevel;
+    }
+  }
+
+  private log(
     { args = [], level }: { args?: any[]; level: LogLevel },
     operator: 'log' | 'error' | 'debug' | 'info' | 'warn' = 'log',
-  ) {
-    const logLevel = +(process.env.LOG_LEVEL || LogLevel.Info) as LogLevel;
-    if (level <= logLevel) {
+  ): void {
+    // const logLevel = +(process.env.LOG_LEVEL || LogLevel.Info) as LogLevel;
+    if (level <= this.logLevel) {
       // console[operator](...args);
       console.log(
         util.inspect(...args, { showHidden: false, depth: null, colors: true }),
@@ -23,23 +32,23 @@ export class Logger {
     }
   }
 
-  public static fatal(...args: any[]) {
+  public fatal(...args: any[]): void {
     this.log({ args, level: LogLevel.Fatal }, 'error');
   }
 
-  public static error(...args: any[]) {
+  public error(...args: any[]): void {
     this.log({ args, level: LogLevel.Error }, 'error');
   }
 
-  public static warning(...args: any[]) {
+  public warning(...args: any[]): void {
     this.log({ args, level: LogLevel.Warning }, 'warn');
   }
 
-  public static info(...args: any[]) {
+  public info(...args: any[]): void {
     this.log({ args, level: LogLevel.Info }, 'info');
   }
 
-  public static debug(...args: any[]) {
+  public debug(...args: any[]): void {
     this.log({ args, level: LogLevel.Debug }, 'debug');
   }
 }

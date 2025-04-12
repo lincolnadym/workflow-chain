@@ -1,5 +1,5 @@
 import { IContextItem, IWorkflowContext } from './common';
-import { Logger as Log } from './logger';
+import { Logger, LogLevel } from './logger';
 
 /**
  * Partial Interface of a task definition.  This defines a single task
@@ -51,7 +51,10 @@ export interface ITask {
  * @param Constructor takes an ITaskDefinition.
  */
 export class TWorkflowTask implements ITask {
-  constructor(protected taskDefinition: ITaskDefinition) {}
+  protected log: Logger;
+  constructor(protected taskDefinition: ITaskDefinition) {
+    this.log = new Logger(LogLevel.Info);
+  }
 
   /**
    * Provides a method to initialize task constructs.  These
@@ -59,7 +62,7 @@ export class TWorkflowTask implements ITask {
    * @returns The task context item.
    */
   public doPreTask(wfContext?: IWorkflowContext): IContextItem {
-    Log.info(
+    this.log.info(
       `- WorkflowTask - Task ${this.taskDefinition.taskName} - doPreTask() -`,
     );
     return {
@@ -75,7 +78,7 @@ export class TWorkflowTask implements ITask {
    * @returns The task context item.
    */
   public doRunTask(wfContext?: IWorkflowContext): IContextItem {
-    Log.info(
+    this.log.info(
       `- WorkflowTask - Task ${this.taskDefinition.taskName} - doRunTask() -`,
     );
     return {
@@ -86,7 +89,7 @@ export class TWorkflowTask implements ITask {
   }
 
   public doPostTask(wfContext?: IWorkflowContext): IContextItem {
-    Log.info(
+    this.log.info(
       `- WorkflowTask - Task ${this.taskDefinition.taskName} - doPostTask() -`,
     );
     return {

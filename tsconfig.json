@@ -17,7 +17,6 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "experimentalDecorators": true,
-    "suppressImplicitAnyIndexErrors": true,
     "strictPropertyInitialization": false
   },
   "exclude": ["node_modules", "test", "test-reports"],

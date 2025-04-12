@@ -1,7 +1,8 @@
 import {
   IWorkflowContext,
   TWorkflowTask,
-  Logger as Log,
+  Logger,
+  LogLevel,
 } from '../../src/models';
 import { SampleWorkflowNS } from '../../src/workflows';
 import { WorkflowSample } from '../../src/workflows';
@@ -11,6 +12,7 @@ const testDefinitions = mockWFDefinition;
 
 describe('Task Objects', () => {
   let theWorkflow: WorkflowSample;
+  const log: Logger = new Logger(LogLevel.Debug);
   beforeEach(() => {
     theWorkflow = new WorkflowSample(SampleWorkflowNS.sampleWorkflow);
   });
@@ -54,7 +56,7 @@ describe('Task Objects', () => {
       expect(
         theWorkflow.getTaskDictionary()[key] instanceof TWorkflowTask,
       ).toBe(true);
-      Log.info(
+      log.info(
         `Task Key [${key}] Dictionary [${theWorkflow.getTaskDictionary()[key]}`,
       ); // All fine!
       // if (theWorkflow.isKey(theWorkflow.getTaskDictionary()[key], key)) {
@@ -62,8 +64,8 @@ describe('Task Objects', () => {
     });
   });
   test('should allocate a workflow with a task instance with a task definition', async () => {
-    Log.info('- theWorkflow.getTaskDictionary -');
-    Log.info(theWorkflow.getTaskDictionary()['WorkflowTask001']);
+    log.info('- theWorkflow.getTaskDictionary -');
+    log.info(theWorkflow.getTaskDictionary()['WorkflowTask001']);
     expect(theWorkflow.getTaskDictionary()).toBeDefined();
     expect(
       theWorkflow.getTaskDictionary()['WorkflowTask001'] instanceof
@@ -120,7 +122,7 @@ describe('Task Objects', () => {
     });
   });
   test('setWorkflowContext should set the workflow context', async () => {
-    let wfContext: IWorkflowContext = {
+    const wfContext: IWorkflowContext = {
       task001: {
         contextKey: 'wfTask001',
         contextValue: { eleOne: 'elementOne' },
@@ -161,7 +163,7 @@ describe('Task Objects', () => {
     });
   });
   test('setWorkflowContext should set/override the current workflow context', async () => {
-    let wfContext: IWorkflowContext = {
+    const wfContext: IWorkflowContext = {
       wfTask001: {
         contextKey: 'wfTask001',
         contextValue: { eleOne: 'elementOne' },
@@ -215,11 +217,11 @@ describe('Task Objects', () => {
         statusCode: 'SUCCESS',
       },
     });
-    Log.info('- theWorkflow.doRunWorkflow - Context - Before -');
-    Log.info(theWorkflow.getWorkflowContext());
+    log.info('- theWorkflow.doRunWorkflow - Context - Before -');
+    log.info(theWorkflow.getWorkflowContext());
     theWorkflow.doRunWorkflow();
-    Log.info('- theWorkflow.doRunWorkflow - Context - After -');
-    Log.info(theWorkflow.getWorkflowContext());
+    log.info('- theWorkflow.doRunWorkflow - Context - After -');
+    log.info(theWorkflow.getWorkflowContext());
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
       'WorkflowSample:doPreWorkflow': {
         contextKey: 'WorkflowSample:doPreWorkflow',

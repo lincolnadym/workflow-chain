@@ -1,5 +1,5 @@
 import { ITaskDictionary, IWorkflowContext, IContextItem } from './common';
-import { Logger as Log } from './logger';
+import { LogLevel, Logger } from './logger';
 import { ITask } from './tworkflowtask';
 import { ITaskDefinition } from './tworkflowtask';
 import { joiSchemaWFDefinition, Validator } from './validator';
@@ -44,10 +44,19 @@ export interface IWorkflowDefinition {
 export class TWorkflow {
   protected workflowTasks: ITaskDictionary;
   protected workflowContext: IWorkflowContext;
+  protected log: Logger;
 
-  constructor(protected wfDefinition: IWorkflowDefinition) {
+  constructor(
+    protected wfDefinition: IWorkflowDefinition,
+    logLevel?: LogLevel,
+  ) {
     this.workflowTasks = {};
     this.workflowContext = {};
+    if (logLevel) {
+      this.log = new Logger(logLevel);
+    } else {
+      this.log = new Logger(LogLevel.Info);
+    }
   }
 
   /**
@@ -57,7 +66,7 @@ export class TWorkflow {
    * is valid or not.
    */
   public doValidation(): Joi.ValidationResult {
-    Log.info(`- Workflow - doInitialize() - ITaskDefinitions -`);
+    this.log.info(`- Workflow - doInitialize() - ITaskDefinitions -`);
     const theValidator = new Validator(
       this.wfDefinition,
       joiSchemaWFDefinition,
@@ -88,19 +97,31 @@ export class TWorkflow {
    * section of the task defintions.  Operates off the workflow context.
    */
   public doRunWorkflow(): void {
-    Log.info(`- Workflow - doRunWorkflow() -`);
-    Log.info(`- Workflow - Tasks -`);
+    this.log.info(`- Workflow - doRunWorkflow() -`);
+    this.log.info(`- Workflow - Tasks -`);
     Object.keys(this.getTaskDictionary()).forEach((x, k) => {
-      Log.info(x, this.getTaskDictionary()[k]); // All fine!
+      this.log.info(x, this.getTaskDictionary()[k]); // All fine!
       // if (this.isKey<ITask>(x, k))
     });
     let atBat: ITask = this.getTaskDictionary()[this.getWorkflowStartTask()];
-    let onDeck: boolean = true;
+    let onDeck = true;
     do {
-      Log.info(`Running Task ${atBat.getTaskDefinition().taskName}`);
+      this.log.info(`Running Task ${atBat.getTaskDefinition().taskName}`);
       this.addContext(atBat.doPreTask());
+      this.log.info(`- Workflow - Context - After atBat.doPreTask() -`);
+      this.log.info(this.getWorkflowContext());
+      this.log.info(`------------------------------------------------`);
+
       this.addContext(atBat.doRunTask());
+      this.log.info(`- Workflow - Context - After atBat.doRunTask() -`);
+      this.log.info(this.getWorkflowContext());
+      this.log.info(`------------------------------------------------`);
+
       this.addContext(atBat.doPostTask());
+      this.log.info(`- Workflow - Context - After atBat.doPostTask() -`);
+      this.log.info(this.getWorkflowContext());
+      this.log.info(`------------------------------------------------`);
+
       if (atBat.getTaskDefinition().nextTasks.length > 0) {
         atBat = this.workflowTasks[atBat.getTaskDefinition().nextTasks[0]];
       } else {
@@ -118,7 +139,7 @@ export class TWorkflow {
    * post- methods in an adhoc/custom sequence.  Operates off the workflow context.
    */
   public runTask(theTask: ITaskDefinition): void {
-    Log.info(`- Workflow - ITaskDefinitions - doPostWorkflow() -`);
+    this.log.info(`- Workflow - ITaskDefinitions - doPostWorkflow() -`);
   }
 
   /**
