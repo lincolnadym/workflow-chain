@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "Library for workflow processing using task chaining",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist/ && tsc",
     "clean": "tsc --build --clean && rm -rf dist/*",
     "lint": "tsc --noEmit && eslint src/**/*.ts --fix",
     "test": "jest --coverage",
